@@ -15,7 +15,7 @@
  *    }
  */
 
-import { CHANGE_USERNAME } from './constants';
+import { CLOSE_MENU } from "./constants";
 
 /**
  * Changes the input field of the form
@@ -24,9 +24,9 @@ import { CHANGE_USERNAME } from './constants';
  *
  * @return {object} An action object with a type of CHANGE_USERNAME
  */
-export function changeUsername(username) {
+export function CloseMenuu() {
   return {
-    type: CHANGE_USERNAME,
-    username,
+    type: CLOSE_MENU,
+    content: false
   };
 }

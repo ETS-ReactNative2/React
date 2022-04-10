@@ -7,22 +7,19 @@
  *
  */
 
-import produce from 'immer';
-import { CHANGE_USERNAME } from './constants';
+import produce from "immer";
+import { CLOSE_MENU } from "./constants";
 
 // The initial state of the App
 export const initialState = {
-  username: '',
+  menu: false
 };
 
-/* eslint-disable default-case, no-param-reassign */
 const homeReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case CHANGE_USERNAME:
-        // Delete prefixed '@' from the github username
-        draft.username = action.username.replace(/@/gi, '');
-        break;
+      case CLOSE_MENU:
+        return state.set("menu", action.content);
     }
   });
 
