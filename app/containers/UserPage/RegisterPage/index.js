@@ -1,7 +1,15 @@
 // React
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 
 // Redux
+import { connect } from "react-redux";
+import { compose, bindActionCreators } from "redux";
+import { createStructuredSelector } from "reselect";
+import { useInjectReducer } from "utils/injectReducer";
+import reducer from "../reducer";
+
+//action
+import { Register } from '../actions'
 
 // Components
 import {
@@ -17,48 +25,48 @@ import { ChildContainer, Title } from "../../../Components/Theme/appTheme";
 import closeEye from "../../../media/closeEye.svg";
 import eye from "../../../media/eye.svg";
 
-function RegisterPage() {
+const key = "register";
+
+function RegisterPage({Register}) {
+
+  useInjectReducer({ key, reducer });
+
   const [passwordShown, setPasswordShown] = useState(false);
-  const [username, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({});
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
 
   const handleUsernameChange = username => {
-    console.log("username");
-    setUserName(username);
+    setUser({...user, username: username});
   };
   const handleEmailChange = email => {
-    console.log("email");
-    setEmail(email);
+    setUser({...user ,email: email});
   };
   const handlePasswordChange = password => {
-    console.log("password");
-    setPassword(password);
+    setUser({...user ,password: password});
   };
 
   const sendNewUser = () => {
-    console.log("tt", username, email, password);
-    newUser(username, email, password);
+    Register(user);
   };
 
   return (
     <ChildContainer>
       <Title>Inscrit toi !</Title>
       <DivInput>
-        <Input placeholder="Pseudo" onChange={e => handleUsernameChange(e)} />
+        <Input placeholder="Pseudo" value={user.username} onChange={e => handleUsernameChange(e.target.value)} />
       </DivInput>
       <DivInput>
-        <Input placeholder="E-mail" onChange={e => handleEmailChange(e)} />
+        <Input placeholder="E-mail" value={user.email} onChange={e => handleEmailChange(e.target.value)} />
       </DivInput>
       <DivInput>
         <Input
           type={passwordShown ? "password" : "text"}
           placeholder="Mot de passe"
-          onChange={e => handlePasswordChange(e)}
+          value={user.password}
+          onChange={e => handlePasswordChange(e.target.value)}
         />
         <DivMask>
           <MaskPassword
@@ -75,4 +83,23 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+const mapStateToProps = createStructuredSelector({
+});
+
+export function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    Register
+  },
+  dispatch
+  );
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+
+export default compose(
+  withConnect,
+  memo
+)(RegisterPage);

@@ -47,7 +47,6 @@ export function HomePage() {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-  const isConnected = false;
 
   return (
     <div>
