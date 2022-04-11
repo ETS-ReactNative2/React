@@ -24,13 +24,15 @@ import { ChildContainer, Title } from "../../../Components/Theme/appTheme";
 // Media
 import closeEye from "../../../media/closeEye.svg";
 import eye from "../../../media/eye.svg";
+import { makeSelectLoading } from "../selectors";
 
 const key = "register";
 
-function RegisterPage({Register}) {
+function RegisterPage({Register, loading}) {
 
   useInjectReducer({ key, reducer });
 
+  console.log('load', loading);
   const [passwordShown, setPasswordShown] = useState(false);
   const [user, setUser] = useState({});
 
@@ -84,6 +86,7 @@ function RegisterPage({Register}) {
 }
 
 const mapStateToProps = createStructuredSelector({
+  loading: makeSelectLoading()
 });
 
 export function mapDispatchToProps(dispatch) {

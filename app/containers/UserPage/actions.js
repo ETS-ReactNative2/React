@@ -1,15 +1,18 @@
 export function Register(user) {
   
-  const data = {
-    email: user.email,
-    username: user.username,
-    password: user.password,
-    role: false
-  }
-  console.log('1', data);
+  return dispatch => {
+
+    console.log('test');
+    dispatch({ type: 'REGISTER_START' })
+
+    const data = {
+      email: user.email,
+      username: user.username,
+      password: user.password,
+      role: false
+    }
     const requestOptions = {
       method: 'POST',
-      mode: 'no-cors',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -17,5 +20,12 @@ export function Register(user) {
     }
 
     fetch( `http://localhost:8000/user/register`, requestOptions )
-      .then( res => {console.log('reponse', res)});
+      .then( res => {
+        if (res.error) {
+          dispatch({ type: 'REGISTER_ERROR', payload: res.error });
+        } else {
+          dispatch({ type: 'REGISTER_END' });
+        }
+      });
+  }
 }

@@ -1,17 +1,20 @@
-import produce from "immer";
-import { CLOSE_MENU } from "./constants";
+import { fromJS } from 'immutable';
 
 // The initial state of the App
-export const initialState = {
-  User: false
-};
+export const initialState = fromJS({
+  user: false,
+  loading: false
+});
 
-const UserReducer = (state = initialState, action) =>
-  produce(state, draft => {
-    switch (action.type) {
-      case CLOSE_MENU:
-        return state.set("menu", action.content);
-    }
-  });
+const UserReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'REGISTER_START':
+      console.log('reducer');
+      return state.set("loading", true);
+    break;
+    default:
+			return state;
+  }
+}
 
 export default UserReducer;
