@@ -77,10 +77,10 @@ export function Register(user) {
 
     fetch( `http://localhost:8000/user/register`, requestOptions )
       .then( res => {
+        console.log('action', res);
         if (res.error) {
           dispatch({ type: 'REGISTER_ERROR', payload: res.error });
         } else {
-          console.log('action end')
           dispatch({ type: 'REGISTER_END' });
         }
       });
