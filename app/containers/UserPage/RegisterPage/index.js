@@ -24,7 +24,7 @@ import { ChildContainer, Title } from "../../../Components/Theme/appTheme";
 // Media
 import closeEye from "../../../media/closeEye.svg";
 import eye from "../../../media/eye.svg";
-import { makeSelectLoading } from "../selectors";
+import { makeSelectLoading, makeSelectUser } from "../selectors";
 
 const key = "register";
 
@@ -86,7 +86,8 @@ function RegisterPage({Register, loading}) {
 }
 
 const mapStateToProps = createStructuredSelector({
-  loading: makeSelectLoading()
+  loading: makeSelectLoading(),
+  user: makeSelectUser()
 });
 
 export function mapDispatchToProps(dispatch) {

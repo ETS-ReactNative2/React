@@ -38,11 +38,10 @@ export function routeReducer(state = routeInitialState, action) {
  */
 export default function createReducer(injectedReducers = {}) {
   const rootReducer = combineReducers({
+    router: connectRouter(history),
     route: routeReducer,
     global: globalReducer,
     language: languageProviderReducer,
-    user: userReducer,
-    router: connectRouter(history),
     ...injectedReducers,
   });
 
