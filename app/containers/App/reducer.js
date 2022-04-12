@@ -15,9 +15,8 @@ export const initialState = {
   loading: false,
   error: false,
   user: false,
-  userData: {
-    repositories: false,
-  },
+  succes: false,
+  
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -27,11 +26,9 @@ const appReducer = (state = initialState, action) =>
       case LOAD_REPOS:
         draft.loading = true;
         draft.error = false;
-        draft.userData.repositories = false;
         break;
 
       case LOAD_REPOS_SUCCESS:
-        draft.userData.repositories = action.repos;
         draft.loading = false;
         break;
 
@@ -42,18 +39,23 @@ const appReducer = (state = initialState, action) =>
 
       case "REGISTER_START":
         draft.loading = true;
-        console.log('start')
+        draft.error = false;
       break;
 
       case "REGISTER_ERROR":
         draft.loading = false;
-        console.log('error', error)
-        draft.error = action.error;
+        draft.error = action.payload;
       break;
        
       case "REGISTER_END":
         draft.loading = false;
-        console.log('end')
+        draft.succes = true;
+      break;
+
+      case "NOTIFICATION_SEND":
+        console.log('reducer');
+        draft.succes = false;
+      break;
     }
   });
 

@@ -39,12 +39,13 @@ export const DivInput = styled.div`
   margin-top: 20px;
 
   border: 3px solid;
-  border-color: #00e3ff;
+  border-color: ${props => props.error ? "red" : "#00e3ff"};
   border-radius: 5px;
 
   font-size: 20px;
   text-align: center;
   color: white;
+
 `;
 
 export const Button = styled.div`
@@ -80,3 +81,10 @@ export const DivMask = styled.div`
     background-color: rgba(255, 255, 255, 0.4);
   }
 `;
+
+export const ErrorMessage = styled.div`
+  color: red;
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 600;
+`
