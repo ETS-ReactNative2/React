@@ -6,10 +6,10 @@ import { connect } from "react-redux";
 import { compose, bindActionCreators } from "redux";
 import { createStructuredSelector } from "reselect";
 import { useInjectReducer } from "utils/injectReducer";
-import reducer from "../reducer";
+import reducer from "../../App/reducer";
 
 //action
-import { Register } from '../actions'
+import { Register } from '../../App/actions'
 
 // Components
 import {
@@ -24,7 +24,7 @@ import { ChildContainer, Title } from "../../../Components/Theme/appTheme";
 // Media
 import closeEye from "../../../media/closeEye.svg";
 import eye from "../../../media/eye.svg";
-import { makeSelectLoading, makeSelectUser } from "../selectors";
+import { makeSelectLoading } from "../../App/selectors";
 
 const key = "register";
 
@@ -55,6 +55,7 @@ function RegisterPage({Register, loading}) {
   };
 
   return (
+    !loading ?
     <ChildContainer>
       <Title>Inscrit toi !</Title>
       <DivInput>
@@ -82,28 +83,26 @@ function RegisterPage({Register, loading}) {
         Inscription
       </Button>
     </ChildContainer>
+    : null
   );
 }
 
 const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
-  user: makeSelectUser()
 });
 
 export function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     Register
-  },
-  dispatch
-  );
+	}, dispatch)
 }
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 );
 
 export default compose(
   withConnect,
-  memo
+  memo,
 )(RegisterPage);

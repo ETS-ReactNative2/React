@@ -1,5 +1,4 @@
 export function Register(user) {
-  
   return dispatch => {
 
     console.log('test');

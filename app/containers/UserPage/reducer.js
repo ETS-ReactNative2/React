@@ -1,19 +1,17 @@
-import { fromJS } from 'immutable';
-
+import { fromJS } from 'immutable'
 // The initial state of the App
 export const initialState = fromJS({
-  user: {},
+  user: false,
   loading: false
 });
 
 const UserReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'REGISTER_START':
-      console.log('reducer');
-      return state.set("loading", true);
+      return state.set('loading', true)
     break;
     default:
-			return state;
+      return state;
   }
 }
 

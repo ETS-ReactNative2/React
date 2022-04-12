@@ -14,7 +14,7 @@ import { LOAD_REPOS_SUCCESS, LOAD_REPOS, LOAD_REPOS_ERROR } from './constants';
 export const initialState = {
   loading: false,
   error: false,
-  currentUser: false,
+  user: false,
   userData: {
     repositories: false,
   },
@@ -33,13 +33,27 @@ const appReducer = (state = initialState, action) =>
       case LOAD_REPOS_SUCCESS:
         draft.userData.repositories = action.repos;
         draft.loading = false;
-        draft.currentUser = action.username;
         break;
 
       case LOAD_REPOS_ERROR:
         draft.error = action.error;
         draft.loading = false;
         break;
+
+      case "REGISTER_START":
+        draft.loading = true;
+        console.log('start')
+      break;
+
+      case "REGISTER_ERROR":
+        draft.loading = false;
+        console.log('error', error)
+        draft.error = action.error;
+      break;
+       
+      case "REGISTER_END":
+        draft.loading = false;
+        console.log('end')
     }
   });
 
