@@ -33,7 +33,6 @@ function HomePage() {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-
   return (
     <div>
       <Logo src={logo} alt="Logo" />

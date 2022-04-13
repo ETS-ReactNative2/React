@@ -7,7 +7,8 @@ import { compose, bindActionCreators } from "redux";
 import { createStructuredSelector } from "reselect";
 import { useInjectReducer } from "utils/injectReducer";
 
-//action - reducer - selectors
+// action - reducer - selectors
+import { toast } from 'react-toastify';
 import reducer from "../../App/reducer";
 import { Register, NotificationSend } from '../../App/actions'
 import { makeSelectLoading, makeSelectError, makeSelectSucces } from "../../App/selectors";
@@ -29,12 +30,10 @@ import closeEye from "../../../media/closeEye.svg";
 import eye from "../../../media/eye.svg";
 
 //Tools
-import { toast } from 'react-toastify';
 
 const key = "register";
 
-function RegisterPage({Register, loading, error, succes, NotificationSend}) {
-
+function RegisterPage({ Register, loading, error, succes, NotificationSend }) {
   useInjectReducer({ key, reducer });
 
   const [passwordShown, setPasswordShown] = useState(true);
@@ -50,52 +49,46 @@ function RegisterPage({Register, loading, error, succes, NotificationSend}) {
   };
 
   const handleUsernameChange = username => {
-    setUser({...user, username: username})
-    username ?
-    setEmptyUsername(false)
-    : null
+    setUser({ ...user, username: username });
+    username ? setEmptyUsername(false) : null;
   };
   const handleEmailChange = email => {
-    setUser({...user, email: email})
-    email ?
-    setEmptyEmail(false)
-    : null
+    setUser({ ...user, email: email });
+    email ? setEmptyEmail(false) : null;
   };
   const handlePasswordChange = password => {
-    setUser({...user, password: password})
-    password ?
-    setEmptyPassword(false)
-    : null
+    setUser({ ...user, password: password });
+    password ? setEmptyPassword(false) : null;
   };
 
   const sendNewUser = () => {
     if (user.username && user.email && user.password) {
-      const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_()'{}~\|=£¤µ])[A-Za-z\d@$!%*?&_()'{}~\|=£¤µ]{6,}$/
-      const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-      setEmptyUsername(false)
-      setEmptyEmail(false)
-      setEmptyPassword(false)
+      const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_()'{}~\|=£¤µ])[A-Za-z\d@$!%*?&_()'{}~\|=£¤µ]{6,}$/;
+      const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+      setEmptyUsername(false);
+      setEmptyEmail(false);
+      setEmptyPassword(false);
       if (user.email.match(regexEmail)) {
         if (user.password.match(regexPassword)) {
-          setUser({ username: "", email: "", password: ""})
-          setInvalidPassword(false)
-          setInvalidEmail(false)
-          Register(user)
+          setUser({ username: "", email: "", password: "" });
+          setInvalidPassword(false);
+          setInvalidEmail(false);
+          Register(user);
         } else {
-          setInvalidPassword(true)
+          setInvalidPassword(true);
         }
       } else {
-        setInvalidEmail(true)
+        setInvalidEmail(true);
       }
     } else {
       if (!user.username) {
-        setEmptyUsername(true)
+        setEmptyUsername(true);
       }
       if (!user.email) {
-        setEmptyEmail(true)
-      }  
+        setEmptyEmail(true);
+      }
       if (!user.password) {
-        setEmptyPassword(true)
+        setEmptyPassword(true);
       }
     }
   };
@@ -103,39 +96,42 @@ function RegisterPage({Register, loading, error, succes, NotificationSend}) {
   useEffect(() => {
     if (succes) {
       const notify = () => toast("Wow so easy!");
-      NotificationSend()
+      NotificationSend();
     }
-  })
+  });
 
   return (
     <ChildContainer>
       <Title>Inscrit toi !</Title>
       <DivInput error={error}>
-        <Input placeholder="Pseudo" value={user.username} onChange={e => handleUsernameChange(e.target.value)} />
+        <Input
+          placeholder="Pseudo"
+          value={user.username}
+          onChange={e => handleUsernameChange(e.target.value)}
+        />
       </DivInput>
-      {error.username ?
+      {error.username ? (
         <ErrorMessage>Ce pseudo est déjà pris</ErrorMessage>
-        : null
-      }
-      {emptyUsername ?
+      ) : null}
+      {emptyUsername ? (
         <ErrorMessage>Ce Champ est obligatoire</ErrorMessage>
-        : null
-      }
+      ) : null}
       <DivInput error={error}>
-        <Input placeholder="E-mail" value={user.email} onChange={e => handleEmailChange(e.target.value)} />
+        <Input
+          placeholder="E-mail"
+          value={user.email}
+          onChange={e => handleEmailChange(e.target.value)}
+        />
       </DivInput>
-      {error.email ?
+      {error.email ? (
         <ErrorMessage>Cette E-mail est déjà pris</ErrorMessage>
-        : null
-      }
-      {emptyEmail ?
+      ) : null}
+      {emptyEmail ? (
         <ErrorMessage>Ce Champ est obligatoire</ErrorMessage>
-        : null
-      }
-      {invalidEmail ?
+      ) : null}
+      {invalidEmail ? (
         <ErrorMessage>Le format de l'E-mail est incorrect</ErrorMessage>
-        : null
-      }
+      ) : null}
       <DivInput>
         <Input
           type={passwordShown ? "password" : "text"}
@@ -151,19 +147,24 @@ function RegisterPage({Register, loading, error, succes, NotificationSend}) {
           />
         </DivMask>
       </DivInput>
-      {emptyPassword ?
+      {emptyPassword ? (
         <ErrorMessage>Ce Champ est obligatoire</ErrorMessage>
-        : null
-      }
-      {invalidPassword ?
-        <ErrorMessage>Le mot de passe doit contenir au minimum 6 caractères, une majuscule, une minuscule, un caractère spécial et un chiffre </ErrorMessage>
-        : null
-      }
-      {!loading ?
-        <Button type="submit" style={{ marginTop: "40px" }} onClick={() => sendNewUser()}>
+      ) : null}
+      {invalidPassword ? (
+        <ErrorMessage>
+          Le mot de passe doit contenir au minimum 6 caractères, une majuscule,
+          une minuscule, un caractère spécial et un chiffre{" "}
+        </ErrorMessage>
+      ) : null}
+      {!loading ? 
+        <Button
+          type="submit"
+          style={{ marginTop: "40px" }}
+          onClick={() => sendNewUser()}
+        >
           Inscription
         </Button>
-      :
+        :
         <Loading />
       }
     </ChildContainer>
@@ -173,22 +174,23 @@ function RegisterPage({Register, loading, error, succes, NotificationSend}) {
 const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
-  succes: makeSelectSucces(),
+  succes: makeSelectSucces()
 });
 
 export function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    Register,
-    NotificationSend
-	}, dispatch)
+  return bindActionCreators(
+    {
+      Register,
+      NotificationSend
+  }, dispatch)
 }
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
 export default compose(
   withConnect,
-  memo,
+  memo
 )(RegisterPage);

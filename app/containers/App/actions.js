@@ -15,7 +15,7 @@
  *    }
  */
 
-import { LOAD_REPOS, LOAD_REPOS_SUCCESS, LOAD_REPOS_ERROR } from './constants';
+import { LOAD_REPOS, LOAD_REPOS_SUCCESS, LOAD_REPOS_ERROR } from "./constants";
 
 /**
  * Load the repositories, this action starts the request saga
@@ -24,7 +24,7 @@ import { LOAD_REPOS, LOAD_REPOS_SUCCESS, LOAD_REPOS_ERROR } from './constants';
  */
 export function loadRepos() {
   return {
-    type: LOAD_REPOS,
+    type: LOAD_REPOS
   };
 }
 
@@ -40,7 +40,7 @@ export function reposLoaded(repos, username) {
   return {
     type: LOAD_REPOS_SUCCESS,
     repos,
-    username,
+    username
   };
 }
 
@@ -54,69 +54,69 @@ export function reposLoaded(repos, username) {
 export function repoLoadingError(error) {
   return {
     type: LOAD_REPOS_ERROR,
-    error,
+    error
   };
 }
 export function Register(user) {
   return dispatch => {
-    dispatch({ type: 'REGISTER_START' })
+    dispatch({ type: "REGISTER_START" });
 
     const data = {
       email: user.email,
       username: user.username,
       password: user.password,
       role: false
-    }
+    };
     const requestOptions = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(data)
-    }
+    };
 
-    fetch( `http://localhost:8000/user/register`, requestOptions )
+    fetch(`http://localhost:8000/user/register`, requestOptions)
       .then(response => response.json())
-      .then( res => {
+      .then(res => {
         if (res.error) {
-          dispatch({ type: 'REGISTER_ERROR', payload: res });
+          dispatch({ type: "REGISTER_ERROR", payload: res });
         } else {
-          dispatch({ type: 'REGISTER_END' });
+          dispatch({ type: "REGISTER_END" });
         }
       });
-  }
+  };
 }
 
 export function NotificationSend() {
   return dispatch => {
-    dispatch({ type: 'NOTIFICATION_SEND' })
-  }
+    dispatch({ type: "NOTIFICATION_SEND" });
+  };
 }
 
 export function Login(user) {
   return dispatch => {
-    dispatch({ type: 'LOGIN_START' })
+    dispatch({ type: "LOGIN_START" });
 
     const data = {
       username: user.username,
-      password: user.password,
-    }
+      password: user.password
+    };
     const requestOptions = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(data)
-    }
+    };
 
-    fetch( `http://localhost:8000/user/login`, requestOptions )
+    fetch(`http://localhost:8000/user/login`, requestOptions)
       .then(response => response.json())
-      .then( res => {
+      .then(res => {
         if (res.error) {
-          dispatch({ type: 'LOGIN_ERROR', payload: res });
+          dispatch({ type: "LOGIN_ERROR", payload: res });
         } else {
-          dispatch({ type: 'LOGIN_END' });
+          dispatch({ type: "LOGIN_END" });
         }
       });
-  }
+  };
 }

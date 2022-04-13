@@ -37,8 +37,16 @@ export const DivInput = styled.div`
 
   margin-top: 30px;
 
-  background: linear-gradient(to right, ${props => props.error ? "red" :"#00e3ff"}, ${props => props.error ? "red" :"#00e3ff"}),
-    linear-gradient(to right, ${props => props.error ? "red" :"#ff00ff"}, ${props => props.error ? "red" :"#00e3ff"});
+  background: linear-gradient(
+      to right,
+      ${props => (props.error ? "red" : "#00e3ff")},
+      ${props => (props.error ? "red" : "#00e3ff")}
+    ),
+    linear-gradient(
+      to right,
+      ${props => (props.error ? "red" : "#ff00ff")},
+      ${props => (props.error ? "red" : "#00e3ff")}
+    );
   background-size: 100% 0.1em, 0 0.1em;
   background-position: 100% 100%, 0 100%;
   background-repeat: no-repeat;
@@ -52,7 +60,6 @@ export const DivInput = styled.div`
   &:hover {
     background-size: 0 0.1em, 100% 0.1em;
   }
-
 `;
 
 export const Button = styled.button`
@@ -65,7 +72,7 @@ export const Button = styled.button`
   min-width: 10%;
   margin-top: 25px;
   padding: 5px 20px;
-  background-color: rgba(255,255,255,0);
+  background-color: rgba(255, 255, 255, 0);
   transition: border-color 500ms, color 500ms;
 
   &:hover {
@@ -88,4 +95,4 @@ export const ErrorMessage = styled.div`
   margin-top: 10px;
   font-size: 17px;
   font-weight: 600;
-`
+`;

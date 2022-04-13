@@ -1,18 +1,18 @@
 // React
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 // Tools
-import styled from 'styled-components';
-import AnimatedNumbers from 'react-animated-numbers';
+import styled from "styled-components";
+import AnimatedNumbers from "react-animated-numbers";
 
 // Components
-import AnimatedNumber from 'react-animated-numbers';
-import { ChildContainer } from '../../Components/Theme/appTheme';
+import AnimatedNumber from "react-animated-numbers";
+import { ChildContainer } from "../../Components/Theme/appTheme";
 
 // Media
-import planningImg from '../../media/planning.png';
-import leftArrow from '../../media/leftArrow.svg';
-import rightArrow from '../../media/rightArrow.svg';
+import planningImg from "../../media/planning.png";
+import leftArrow from "../../media/leftArrow.svg";
+import rightArrow from "../../media/rightArrow.svg";
 
 const PlanningBackground = styled.img`
   height: 680px;
@@ -129,23 +129,23 @@ function Planning() {
     <ChildContainer>
       <ContainerDiv>
         <ArrowDiv>
-          {nextPage ?
+          {nextPage ? 
             <LeftArrow src={leftArrow} onClick={() => LeftArrowClick()} />
-           : 
+            : 
             <RightArrow src={rightArrow} onClick={() => RightArrowClick()} />
           }
         </ArrowDiv>
         <PlanningDiv>
           <PlanningBackground src={planningImg} />
           <DivDate>
-            <WeekDate style={{ paddingLeft: '300px' }}>
+            <WeekDate style={{ paddingLeft: "300px" }}>
               <AnimatedNumbers
                 animateToNumber={nextPage ? nextStartDate : startDate}
               />
               /{month < 10 ? <AnimatedNumber animateToNumber={0} /> : null}
               <AnimatedNumber animateToNumber={month} />
             </WeekDate>
-            <WeekDate style={{ paddingLeft: '55px' }}>
+            <WeekDate style={{ paddingLeft: "55px" }}>
               <AnimatedNumber
                 animateToNumber={nextPage ? nextEndDate : endDate}
               />
@@ -154,7 +154,7 @@ function Planning() {
             </WeekDate>
           </DivDate>
           <DayContainer>
-            <Day style={{ width: '143px' }} id="Monday" />
+            <Day style={{ width: "143px" }} id="Monday" />
             <Day id="Tuesday" />
             <Day id="Wednesday" />
             <Day id="Thursday" />

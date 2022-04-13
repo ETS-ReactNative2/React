@@ -26,10 +26,14 @@ import { ChildContainer, Title } from "../../../components/Theme/appTheme";
 import closeEye from "../../../media/closeEye.svg";
 import eye from "../../../media/eye.svg";
 
-//action - reducer - selectors
+// action - reducer - selectors
 import reducer from "../../App/reducer";
-import { Login, NotificationSend } from '../../App/actions'
-import { makeSelectLoading, makeSelectError, makeSelectSucces } from "../../App/selectors";
+import { Login, NotificationSend } from "../../App/actions";
+import {
+  makeSelectLoading,
+  makeSelectError,
+  makeSelectSucces
+} from "../../App/selectors";
 
 const ClickableText = styled.div`
   margin: 0px 15px 0 15px;
@@ -52,14 +56,14 @@ const ClickableTextInscription = styled(ClickableText)`
     font-weight: bold;
     cursor: pointer;
   }
-`
+`;
 
 const DivClickableText = styled.div`
   margin-top: 10px;
   display: flex;
   justify-content: flex-end;
   flex-direction: row;
-  min-width: 25%
+  min-width: 25%;
 `;
 
 const key = "Login";
@@ -77,44 +81,43 @@ function ConnexionPage() {
   };
 
   const handleUsernameChange = username => {
-    setUser({...user, username: username})
-    username ?
-    setEmptyUsername(false)
-    : null
+    setUser({ ...user, username });
+    username ? setEmptyUsername(false) : null;
   };
   const handlePasswordChange = password => {
-    setUser({...user, password: password})
-    password ?
-    setEmptyPassword(false)
-    : null
+    setUser({ ...user, password });
+    password ? setEmptyPassword(false) : null;
   };
 
   const connectUser = () => {
     if (user.username && user.password) {
-      setEmptyUsername(false)
-      setEmptyPassword(false)
-      setUser({ username: "", email: "", password: ""})
-      Login(user)
+      setEmptyUsername(false);
+      setEmptyPassword(false);
+      setUser({ username: "", email: "", password: "" });
+      Login(user);
     } else {
       if (!user.username) {
-        setEmptyUsername(true)
+        setEmptyUsername(true);
       }
       if (!user.password) {
-        setEmptyPassword(true)
+        setEmptyPassword(true);
       }
     }
-  } 
+  };
 
   return (
     <ChildContainer>
       <Title>Connecte-toi à ton compte</Title>
       <DivInput>
-        <Input placeholder="Pseudo" value={user.username} onChange={e => handleUsernameChange(e.target.value)} />
+        <Input
+          placeholder="Pseudo"
+          value={user.username}
+          onChange={e => handleUsernameChange(e.target.value)}
+        />
       </DivInput>
-      {emptyUsername ?
+      {emptyUsername ? (
         <ErrorMessage>Ce Champ est obligatoire</ErrorMessage>
-        : null
-      }
+      ) : null}
       <DivInput>
         <Input
           type={passwordShown ? "password" : "text"}
@@ -130,18 +133,19 @@ function ConnexionPage() {
           />
         </DivMask>
       </DivInput>
-      {emptyPassword ?
+      {emptyPassword ? (
         <ErrorMessage>Ce Champ est obligatoire</ErrorMessage>
-        : null
-      }
+      ) : null}
       <DivClickableText>
         <Link to="/ForgettenPassword" style={{ all: "unset" }}>
           <ClickableText>Mot de passe oublié ?</ClickableText>
         </Link>
       </DivClickableText>
-        <Button type="submit" onClick={() => connectUser()}>Connexion</Button>
+      <Button type="submit" onClick={() => connectUser()}>
+        Connexion
+      </Button>
       <ClickableTextInscription>
-      Pas encore de compte ?
+        Pas encore de compte ?
         <Link to="/Register" style={{ all: "unset" }}>
           <span className="link"> Inscris toi</span>
         </Link>
@@ -153,22 +157,25 @@ function ConnexionPage() {
 const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
-  succes: makeSelectSucces(),
+  succes: makeSelectSucces()
 });
 
 export function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    Login,
-    NotificationSend
-	}, dispatch)
+  return bindActionCreators(
+    {
+      Login,
+      NotificationSend
+    },
+    dispatch
+  );
 }
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 );
 
 export default compose(
   withConnect,
-  memo,
+  memo
 )(ConnexionPage);

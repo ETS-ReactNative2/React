@@ -2,7 +2,7 @@
 import React from "react";
 
 // Tools
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 // Component
