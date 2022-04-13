@@ -29,10 +29,7 @@ import closeEye from "../../../media/closeEye.svg";
 import eye from "../../../media/eye.svg";
 
 //Tools
-import {
-  NotificationContainer,
-  NotificationManager
-} from "react-notifications";
+import { toast } from 'react-toastify';
 
 const key = "register";
 
@@ -54,12 +51,21 @@ function RegisterPage({Register, loading, error, succes, NotificationSend}) {
 
   const handleUsernameChange = username => {
     setUser({...user, username: username})
+    username ?
+    setEmptyUsername(false)
+    : null
   };
   const handleEmailChange = email => {
     setUser({...user, email: email})
+    email ?
+    setEmptyEmail(false)
+    : null
   };
   const handlePasswordChange = password => {
     setUser({...user, password: password})
+    password ?
+    setEmptyPassword(false)
+    : null
   };
 
   const sendNewUser = () => {
@@ -96,14 +102,13 @@ function RegisterPage({Register, loading, error, succes, NotificationSend}) {
 
   useEffect(() => {
     if (succes) {
-      NotificationManager.success("", "Votre compte a bien été créer")
+      const notify = () => toast("Wow so easy!");
       NotificationSend()
     }
   })
 
   return (
     <ChildContainer>
-      <NotificationContainer />
       <Title>Inscrit toi !</Title>
       <DivInput error={error}>
         <Input placeholder="Pseudo" value={user.username} onChange={e => handleUsernameChange(e.target.value)} />
@@ -155,7 +160,7 @@ function RegisterPage({Register, loading, error, succes, NotificationSend}) {
         : null
       }
       {!loading ?
-        <Button style={{ marginTop: "40px" }} onClick={() => sendNewUser()}>
+        <Button type="submit" style={{ marginTop: "40px" }} onClick={() => sendNewUser()}>
           Inscription
         </Button>
       :

@@ -55,7 +55,7 @@ export const DivInput = styled.div`
 
 `;
 
-export const Button = styled.div`
+export const Button = styled.button`
   border: 2px solid;
   border-color: #ff00ff;
   border-radius: 5px;
@@ -65,6 +65,7 @@ export const Button = styled.div`
   min-width: 10%;
   margin-top: 25px;
   padding: 5px 20px;
+  background-color: rgba(255,255,255,0);
   transition: border-color 500ms, color 500ms;
 
   &:hover {

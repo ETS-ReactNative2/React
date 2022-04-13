@@ -92,3 +92,31 @@ export function NotificationSend() {
     dispatch({ type: 'NOTIFICATION_SEND' })
   }
 }
+
+export function Login(user) {
+  return dispatch => {
+    dispatch({ type: 'LOGIN_START' })
+
+    const data = {
+      username: user.username,
+      password: user.password,
+    }
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }
+
+    fetch( `http://localhost:8000/user/login`, requestOptions )
+      .then(response => response.json())
+      .then( res => {
+        if (res.error) {
+          dispatch({ type: 'LOGIN_ERROR', payload: res });
+        } else {
+          dispatch({ type: 'LOGIN_END' });
+        }
+      });
+  }
+}

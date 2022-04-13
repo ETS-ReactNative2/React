@@ -2,10 +2,7 @@
 import React from "react";
 
 // Tools
-import {
-  NotificationContainer,
-  NotificationManager
-} from "react-notifications";
+import { ToastContainer, toast } from 'react-toastify'
 import { useNavigate } from "react-router-dom";
 
 // Component
@@ -13,8 +10,8 @@ import { DivInput, Input, Button } from "../../../components/Input/input";
 import { ChildContainer, Title } from "../../../Components/Theme/appTheme";
 
 function ForgettenPassword() {
+  const notify = () => toast("Wow so easy!");
   function SendEmail() {
-    NotificationManager.success("", "E-mail envoyé !");
     setTimeout(Return(), 3000);
   }
 
@@ -29,8 +26,7 @@ function ForgettenPassword() {
       <DivInput>
         <Input placeholder="E-mail" />
       </DivInput>
-      <Button onClick={() => SendEmail()}>Envoyer</Button>
-      <NotificationContainer />
+      <Button onClick={notify}>Envoyer</Button>
     </ChildContainer>
   );
 }

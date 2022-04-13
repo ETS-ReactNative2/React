@@ -56,7 +56,7 @@ export const Container = styled.div`
 `;
 
 function App() {
-  const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function OpenMenu() {
     setIsMenuOpen(true);

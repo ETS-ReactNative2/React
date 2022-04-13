@@ -39,7 +39,7 @@ const DivDate = styled.div`
   display: flex;
   height: 100px;
   position: absolute;
-  width: 950px;
+  min-width: 950px;
 `;
 
 const WeekDate = styled.div`
@@ -50,7 +50,7 @@ const WeekDate = styled.div`
   font-weight: bold;
   padding-top: 23px;
   justify-content: center;
-  width: 100px;
+  min-width: 100px;
 `;
 
 const DayContainer = styled.div`
@@ -138,14 +138,14 @@ function Planning() {
         <PlanningDiv>
           <PlanningBackground src={planningImg} />
           <DivDate>
-            <WeekDate style={{ paddingLeft: '290px' }}>
+            <WeekDate style={{ paddingLeft: '300px' }}>
               <AnimatedNumbers
                 animateToNumber={nextPage ? nextStartDate : startDate}
               />
               /{month < 10 ? <AnimatedNumber animateToNumber={0} /> : null}
               <AnimatedNumber animateToNumber={month} />
             </WeekDate>
-            <WeekDate style={{ paddingLeft: '40px' }}>
+            <WeekDate style={{ paddingLeft: '55px' }}>
               <AnimatedNumber
                 animateToNumber={nextPage ? nextEndDate : endDate}
               />

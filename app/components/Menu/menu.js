@@ -22,7 +22,7 @@ export const Menu = styled.div`
   position: absolute;
 
   text-align: center;
-  font-size: 3vw;
+  font-size: 50px;
   line-height: 60px;
 
   color: white;

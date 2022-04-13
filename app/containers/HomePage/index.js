@@ -6,13 +6,7 @@
 // Tools
 import styled from "styled-components";
 
-import React, { memo } from "react";
-import PropTypes from "prop-types";
-// import { Helmet } from 'react-helmet';
-import { FormattedMessage } from "react-intl";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import { createStructuredSelector } from "reselect";
+import React from "react";
 
 // Styled component
 
@@ -20,11 +14,6 @@ import { createStructuredSelector } from "reselect";
 
 import { useInjectReducer } from "utils/injectReducer";
 import { useInjectSaga } from "utils/injectSaga";
-import {
-  makeSelectRepos,
-  makeSelectLoading,
-  makeSelectError
-} from "containers/App/selectors";
 import logo from "../../media/cryserLogo.png";
 import { Logo } from "../../components/Theme/appTheme";
 // import H2 from 'components/H2';
@@ -35,15 +24,12 @@ import { Logo } from "../../components/Theme/appTheme";
 // import Input from './Input';
 // import Section from './Section';
 // import messages from './messages';
-import { loadRepos } from "../App/actions";
-import { closeMenu } from "./actions";
-import { makeSelectMenu } from "./selectors";
 import reducer from "./reducer";
 import saga from "./saga";
 
 const key = "home";
 
-export function HomePage() {
+function HomePage() {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
@@ -55,32 +41,4 @@ export function HomePage() {
   );
 }
 
-HomePage.propTypes = {
-  loading: PropTypes.bool,
-  error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  onSubmitForm: PropTypes.func
-};
-
-const mapStateToProps = createStructuredSelector({
-  repos: makeSelectRepos(),
-  username: makeSelectMenu(),
-  loading: makeSelectLoading(),
-  error: makeSelectError()
-});
-
-export function mapDispatchToProps(dispatch) {
-  return {
-    closeMenu: evt => dispatch(closeMenu())
-  };
-}
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
-
-export default compose(
-  withConnect,
-  memo
-)(HomePage);
+export default HomePage;

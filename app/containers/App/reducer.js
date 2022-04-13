@@ -55,6 +55,21 @@ const appReducer = (state = initialState, action) =>
       case "NOTIFICATION_SEND":
         draft.succes = false;
       break;
+
+      case "LOGIN_START":
+        draft.loading = true;
+        draft.error = false;
+      break;
+
+      case "LOGIN_ERROR":
+        draft.loading = false;
+        draft.error = action.payload;
+      break;
+       
+      case "LOGIN_END":
+        draft.loading = false;
+        draft.succes = true;
+      break;
     }
   });
 
