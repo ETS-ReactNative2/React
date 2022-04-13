@@ -22,7 +22,7 @@ import {
   ErrorMessage
 } from "../../../components/Input/input";
 import { ChildContainer, Title } from "../../../Components/Theme/appTheme";
-import Loading from "../../../Components/Icon/Rotate"
+import Loading from "../../../components/Icon/loading"
 
 // Media
 import closeEye from "../../../media/closeEye.svg";
@@ -40,7 +40,7 @@ function RegisterPage({Register, loading, error, succes, NotificationSend}) {
 
   useInjectReducer({ key, reducer });
 
-  const [passwordShown, setPasswordShown] = useState(false);
+  const [passwordShown, setPasswordShown] = useState(true);
   const [emptyUsername, setEmptyUsername] = useState(false);
   const [emptyEmail, setEmptyEmail] = useState(false);
   const [emptyPassword, setEmptyPassword] = useState(false);
@@ -71,6 +71,9 @@ function RegisterPage({Register, loading, error, succes, NotificationSend}) {
       setEmptyPassword(false)
       if (user.email.match(regexEmail)) {
         if (user.password.match(regexPassword)) {
+          setUser({ username: "", email: "", password: ""})
+          setInvalidPassword(false)
+          setInvalidEmail(false)
           Register(user)
         } else {
           setInvalidPassword(true)
@@ -99,8 +102,8 @@ function RegisterPage({Register, loading, error, succes, NotificationSend}) {
   })
 
   return (
-    !loading ?
     <ChildContainer>
+      <NotificationContainer />
       <Title>Inscrit toi !</Title>
       <DivInput error={error}>
         <Input placeholder="Pseudo" value={user.username} onChange={e => handleUsernameChange(e.target.value)} />
@@ -110,7 +113,7 @@ function RegisterPage({Register, loading, error, succes, NotificationSend}) {
         : null
       }
       {emptyUsername ?
-        <ErrorMessage>Ce Champ ne peut pas être vide</ErrorMessage>
+        <ErrorMessage>Ce Champ est obligatoire</ErrorMessage>
         : null
       }
       <DivInput error={error}>
@@ -121,7 +124,7 @@ function RegisterPage({Register, loading, error, succes, NotificationSend}) {
         : null
       }
       {emptyEmail ?
-        <ErrorMessage>Ce Champ ne peut pas être vide</ErrorMessage>
+        <ErrorMessage>Ce Champ est obligatoire</ErrorMessage>
         : null
       }
       {invalidEmail ?
@@ -144,19 +147,21 @@ function RegisterPage({Register, loading, error, succes, NotificationSend}) {
         </DivMask>
       </DivInput>
       {emptyPassword ?
-        <ErrorMessage>Ce Champ ne peut pas être vide</ErrorMessage>
+        <ErrorMessage>Ce Champ est obligatoire</ErrorMessage>
         : null
       }
       {invalidPassword ?
         <ErrorMessage>Le mot de passe doit contenir au minimum 6 caractères, une majuscule, une minuscule, un caractère spécial et un chiffre </ErrorMessage>
         : null
       }
-      <Button style={{ marginTop: "40px" }} onClick={() => sendNewUser()}>
-        Inscription
-      </Button>
-      <NotificationContainer />
+      {!loading ?
+        <Button style={{ marginTop: "40px" }} onClick={() => sendNewUser()}>
+          Inscription
+        </Button>
+      :
+        <Loading />
+      }
     </ChildContainer>
-    : <Loading />
   );
 }
 

@@ -53,7 +53,6 @@ const appReducer = (state = initialState, action) =>
       break;
 
       case "NOTIFICATION_SEND":
-        console.log('reducer');
         draft.succes = false;
       break;
     }

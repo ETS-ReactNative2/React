@@ -40,7 +40,7 @@ export const ClassAnimation = styled.div`
   padding-top: 10px;
   cursor: pointer;
 
-  background-image: linear-gradient(to top, #ff06fe, #ff06fe);
+  background: linear-gradient(to top, #ff06fe, #ff06fe);
   background-size: 25% 2px;
   background-position: bottom;
   background-repeat: no-repeat;

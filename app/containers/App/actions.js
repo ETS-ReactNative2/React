@@ -78,7 +78,6 @@ export function Register(user) {
     fetch( `http://localhost:8000/user/register`, requestOptions )
       .then(response => response.json())
       .then( res => {
-        console.log('action', res)
         if (res.error) {
           dispatch({ type: 'REGISTER_ERROR', payload: res });
         } else {
@@ -90,7 +89,6 @@ export function Register(user) {
 
 export function NotificationSend() {
   return dispatch => {
-    console.log('action');
     dispatch({ type: 'NOTIFICATION_SEND' })
   }
 }

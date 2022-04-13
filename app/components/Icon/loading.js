@@ -4,10 +4,11 @@ import React from "react"
 const Wrapper = styled.div`
   width:200px;
   height:60px;
-  position: absolute;
-  left:50%;
-  top:50%;
+  position: relative;
+  margin-top: 60px;
+  margin-left: 200px;
   transform: translate(-50%, -50%);
+  cursor: not-allowed;
 `
 
 const CircleKey = keyframes`
@@ -20,9 +21,10 @@ const CircleKey = keyframes`
   40%{
     height:20px;
     border-radius: 50%;
-    transform: scaleX(1);
   }
   100%{
+    transform: scaleX(1);
+    background-color: #ff00ff;
     top:0%;
   }
 `
@@ -32,7 +34,7 @@ const Circle = styled.div`
   height:20px;
   position: absolute;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: #00e3ff;
   left:15%;
   transform-origin: 50%;
   animation: ${CircleKey} .5s alternate infinite ease;
@@ -67,7 +69,7 @@ const Shadow = styled.div`
   width:20px;
   height:4px;
   border-radius: 50%;
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0,0,0, 1);
   position: absolute;
   top:62px;
   transform-origin: 50%;

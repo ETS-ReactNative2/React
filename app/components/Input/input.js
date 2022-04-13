@@ -6,19 +6,18 @@ export const Input = styled.input`
   width: 100%;
   height: 100%;
 
-  background-color: rgba(255, 255, 255, 0.3);
+  padding-left: 10px;
+
+  border-radius: 2px;
   transition: background-color 250ms;
+  cursor: text;
 
   &:focus {
     outline: none;
   }
 
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-  }
-
   &::placeholder {
-    color: rgba(255, 255, 255, 0.8);
+    opacity: 1;
   }
 `;
 
@@ -34,17 +33,25 @@ export const DivInput = styled.div`
   display: flex;
 
   min-width: 25%;
-  height: 5%;
+  height: 50px;
 
-  margin-top: 20px;
+  margin-top: 30px;
 
-  border: 3px solid;
-  border-color: ${props => props.error ? "red" : "#00e3ff"};
-  border-radius: 5px;
+  background: linear-gradient(to right, ${props => props.error ? "red" :"#00e3ff"}, ${props => props.error ? "red" :"#00e3ff"}),
+    linear-gradient(to right, ${props => props.error ? "red" :"#ff00ff"}, ${props => props.error ? "red" :"#00e3ff"});
+  background-size: 100% 0.1em, 0 0.1em;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 400ms;
+  border-radius: 2px;
 
   font-size: 20px;
-  text-align: center;
+  text-align: left;
   color: white;
+
+  &:hover {
+    background-size: 0 0.1em, 100% 0.1em;
+  }
 
 `;
 
@@ -71,20 +78,13 @@ export const DivMask = styled.div`
   align-items: center;
   justify-content: center;
 
-  background-color: rgba(255, 255, 255, 0.3);
-  transition: background-color 250ms;
-
   width: 40px;
   height: 100%;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-  }
 `;
 
 export const ErrorMessage = styled.div`
   color: red;
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 600;
 `

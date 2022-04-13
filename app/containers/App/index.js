@@ -6,10 +6,16 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
+//React
 import React, { useState, memo } from 'react';
 import { Helmet } from 'react-helmet';
-import styled from 'styled-components';
 import { Switch, Route, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+
+//Tools
+import styled from 'styled-components';
 
 // import HomePage from 'containers/HomePage/Loadable';
 // import FeaturePage from 'containers/FeaturePage/Loadable';
@@ -24,31 +30,25 @@ import ForgettenPassword from 'containers/UserPage/ForgettenPassword/Loadable';
 import RegisterPage from 'containers/UserPage/RegisterPage/Loadable';
 import TwoFA from 'containers/UserPage/TwoFA/Loadable';
 
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { createStructuredSelector } from 'reselect';
-import {
-  VideoBackground,
-  ChildContainer,
-} from '../../components/Theme/appTheme';
-import background from '../../media/background.mp4';
-import { Title } from '../../components/Menu/title';
-
-import { closeMenu } from '../HomePage/actions';
-import { makeSelectMenu } from '../HomePage/selectors';
 
 // Media
 import close from '../../media/close.svg';
+import background from '../../media/background.mp4';
 
 // Components
+import { Title } from '../../components/Menu/title';
 import {
   CloseMenu,
   FirstLetter,
   ClassAnimation,
   Menu,
 } from '../../components/Menu/menu';
-
+import {
+  VideoBackground,
+  ChildContainer,
+} from '../../components/Theme/appTheme';
 import GlobalStyle from '../../global-styles';
+
 
 export const Container = styled.div`
   display: flex;
@@ -71,7 +71,7 @@ function App() {
   return (
     <Container>
       <Helmet titleTemplate="%s - React.js Boilerplate" defaultTitle="Cryser">
-        <meta name="description" content="A React.js Boilerplate application" />
+        <meta name="Home/Menu" content="" />
         <link
           href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap"
           rel="stylesheet"
@@ -152,12 +152,10 @@ function App() {
 }
 
 const mapStateToProps = createStructuredSelector({
-  menu: makeSelectMenu(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    closeMenu: evt => dispatch(closeMenu()),
   };
 }
 

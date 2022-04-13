@@ -36,7 +36,7 @@ const DivClickableText = styled.div`
 `;
 
 function ConnexionPages() {
-  const [passwordShown, setPasswordShown] = useState(false);
+  const [passwordShown, setPasswordShown] = useState(true);
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
