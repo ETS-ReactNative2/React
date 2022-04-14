@@ -15,7 +15,8 @@ export const initialState = {
   loading: false,
   error: false,
   user: false,
-  succes: false
+  success: false,
+  isConnected: false
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -48,11 +49,11 @@ const appReducer = (state = initialState, action) =>
 
       case "REGISTER_END":
         draft.loading = false;
-        draft.succes = true;
+        draft.success = true;
         break;
 
       case "NOTIFICATION_SEND":
-        draft.succes = false;
+        draft.success = false;
         break;
 
       case "LOGIN_START":
@@ -67,8 +68,14 @@ const appReducer = (state = initialState, action) =>
 
       case "LOGIN_END":
         draft.loading = false;
-        draft.succes = true;
+        draft.success = true;
+        draft.isConnected = true;
+        draft.user = action.payload;
         break;
+
+      case "DISCONNECT":
+        draft.user = false;
+        draft.isConnected = false;
     }
   });
 

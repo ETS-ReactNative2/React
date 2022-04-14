@@ -7,11 +7,11 @@
  */
 
 // React
-import React, { useState, memo } from "react";
+import React, { useState, memo, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { Switch, Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { compose } from "redux";
+import { compose, bindActionCreators } from "redux";
 import { createStructuredSelector } from "reselect";
 
 // Tools
@@ -48,13 +48,17 @@ import {
 } from "../../components/Theme/appTheme";
 import GlobalStyle from "../../global-styles";
 
+// action - reducer - selectors
+import { makeSelectIsConnected } from "./selectors";
+
 export const Container = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-function App() {
+function App({isConnected}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [animation, setAnimation] = useState(false);
 
   function OpenMenu() {
     setIsMenuOpen(true);
@@ -64,7 +68,9 @@ function App() {
     setIsMenuOpen(false);
   }
 
-  const isConnected = false;
+  useEffect(() => {
+    setAnimation(isMenuOpen)
+  })
 
   return (
     <Container>
@@ -100,7 +106,7 @@ function App() {
         <>
           <CloseMenu src={close} onClick={() => CloseMenuu()} />
           <ChildContainer>
-            <Menu>
+            <Menu isOpen={animation}>
               <Link
                 to="/"
                 style={{ all: "unset" }}
@@ -149,10 +155,15 @@ function App() {
   );
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  isConnected: makeSelectIsConnected()
+});
 
 export function mapDispatchToProps(dispatch) {
-  return {};
+  return bindActionCreators(
+    {
+    }, dispatch
+  )
 }
 
 const withConnect = connect(

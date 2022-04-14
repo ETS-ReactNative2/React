@@ -1,6 +1,6 @@
 // React
 import { Link } from "react-router-dom";
-import React, { useState, memo } from "react";
+import React, { useState, memo, useEffect } from "react";
 
 // Redux
 import { connect } from "react-redux";
@@ -10,6 +10,7 @@ import { useInjectReducer } from "utils/injectReducer";
 
 // Tools
 import styled from "styled-components";
+import history from "../../../utils/history";
 
 // Components
 import {
@@ -32,7 +33,7 @@ import { Login, NotificationSend } from "../../App/actions";
 import {
   makeSelectLoading,
   makeSelectError,
-  makeSelectSucces
+  makeSelectSuccess
 } from "../../App/selectors";
 
 const ClickableText = styled.div`
@@ -68,7 +69,7 @@ const DivClickableText = styled.div`
 
 const key = "Login";
 
-function ConnexionPage() {
+function ConnexionPage({Login, success}) {
   useInjectReducer({ key, reducer });
 
   const [passwordShown, setPasswordShown] = useState(true);
@@ -104,6 +105,13 @@ function ConnexionPage() {
       }
     }
   };
+
+  useEffect(() => {
+    if (success) {
+      history.push('/Account')
+      NotificationSend()
+    }
+  })
 
   return (
     <ChildContainer>
@@ -157,7 +165,7 @@ function ConnexionPage() {
 const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
-  succes: makeSelectSucces()
+  success: makeSelectSuccess()
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -165,8 +173,7 @@ export function mapDispatchToProps(dispatch) {
     {
       Login,
       NotificationSend
-    },
-    dispatch
+    }, dispatch
   );
 }
 

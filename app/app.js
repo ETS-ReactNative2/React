@@ -56,7 +56,18 @@ const render = messages => {
           <App />
         </ConnectedRouter>
       </LanguageProvider>
-      <ToastContainer />
+      <ToastContainer 
+        position="top-center"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        theme="dark"
+      />
     </Provider>,
     MOUNT_NODE
   );

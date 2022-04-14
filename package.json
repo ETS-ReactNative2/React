@@ -10,6 +10,10 @@
     "npm": ">=5",
     "node": ">=8.15.1"
   },
+  "browser": { 
+    "fs": false,
+    "child_process": false 
+  },
   "author": "Max Stoiber",
   "license": "MIT",
   "scripts": {
@@ -71,6 +75,7 @@
     "cross-env": "5.2.0",
     "express": "4.16.4",
     "fontfaceobserver": "2.1.0",
+    "fs": "0.0.1-security",
     "history": "^4.10.1",
     "hoist-non-react-statics": "3.3.0",
     "immer": "3.0.0",
@@ -79,6 +84,7 @@
     "ip": "1.1.5",
     "lodash": "4.17.11",
     "minimist": "1.2.0",
+    "net": "^1.0.2",
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-animated-numbers": "^0.11.0",
@@ -96,7 +102,8 @@
     "redux-thunk": "^2.4.1",
     "reselect": "4.0.0",
     "sanitize.css": "8.0.0",
-    "styled-components": "4.2.0"
+    "styled-components": "4.2.0",
+    "tls": "0.0.1"
   },
   "devDependencies": {
     "@babel/cli": "7.4.3",

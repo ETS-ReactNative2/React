@@ -11,7 +11,7 @@ export const CloseMenu = styled.img`
 
   cursor: pointer;
 
-  transition: transform 500ms;
+  transition: transform 0.5s;
 
   &:hover {
     transform: rotate(90deg);
@@ -20,14 +20,12 @@ export const CloseMenu = styled.img`
 
 export const Menu = styled.div`
   position: absolute;
-
   text-align: center;
   font-size: 50px;
   line-height: 60px;
-
   color: white;
-
-  transition: transform 500ms;
+  transition: all ease 0.8s;
+  transform: translateY(${props => props.isOpen ? "0" : "-30%"}) ;
 `;
 export const FirstLetter = styled.span`
   color: #ff06fe;

@@ -1,12 +1,28 @@
-import React, { useState } from "react";
+//React
+import React, { useState, memo } from "react";
+
+// Redux
+import { connect } from "react-redux";
+import { compose, bindActionCreators } from "redux";
+import { createStructuredSelector } from "reselect";
+
+// action - reducer - selectors
+import {
+  makeSelectLoading,
+  makeSelectError,
+  makeSelectUser
+} from "../../App/selectors";
+import { Disconnect } from "../../App/actions";
+
+//Tools
 import styled from "styled-components";
+import history from "../../../utils/history";
+
+//Media
 import check from "../../../media/check.svg";
 import modify from "../../../media/modify.svg";
-import "react-notifications/lib/notifications.css";
-import {
-  NotificationContainer,
-  NotificationManager
-} from "react-notifications";
+import edit from "../../../media/edit.svg"
+import { disconnect } from "ngrok";
 
 const UserContainer = styled.div`
   position: absolute;
@@ -39,21 +55,45 @@ const NameAndImage = styled.div`
   width: 100%;
   height: auto;
 `;
-const ProfilePicture = styled.img`
-  background-color: white;
 
+const DivProfilePicture = styled.div`
+  display: flex;
+  background-color: white;
   width: 70px;
   height: 70px;
-
-  border-radius: 40px;
+  border-radius: 50%;
+`
+const ProfilePicture = styled.img`
 `;
+
+const ModifyProfilePicture = styled(DivProfilePicture)`
+  opacity: 0;
+  background-color: black;
+  position: relative;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+
+  &:hover {
+    opacity: 0.5;
+  }
+`
+
+const EditLogo = styled.img`
+  width: 30px;
+  height: 30px;
+  &:hover {
+    opacity: 1;
+  }
+`
 
 const Name = styled.div`
   color: white;
-
   padding-left: 20px;
   max-width: 60%;
-
   font-size: 40px;
 
   &::first-letter {
@@ -63,8 +103,8 @@ const Name = styled.div`
 
 const TwitchName = styled.div`
   color: white;
-
   font-size: 15px;
+  margin-top: 5px;
 
   &::first-letter {
     color: #ff00ff;
@@ -140,7 +180,7 @@ const ChangePassword = styled.div`
   }
 `;
 
-const Disconnect = styled.div`
+const DisconnectButton = styled.div`
   min-width: 5%;
 
   margin-top: 10px;
@@ -166,28 +206,23 @@ const Disconnect = styled.div`
 
 const InputDiv = styled.div`
   display: flex;
-
   min-width: 10%;
-  height: 5%;
-
-  background-color: rgba(255, 255, 255, 0.3);
-
+  height: ${props => props.height};
+  background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid;
-  border-color: #00e3ff;
+  border-color: ${props => props.error ? "red" : "#00e3ff"};
   border-radius: 5px;
-
-  font-size: 20px;
-  text-align: center;
+  font-size: 25px;
   color: white;
-
-  transition: background-color 250ms;
+  margin-bottom: 10px;
+  transition: border-color 0.6s, background-color 0.2s;
 
   &:focus {
     outline: none;
   }
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.2);
   }
 
   &::placeholder {
@@ -198,26 +233,42 @@ const InputDiv = styled.div`
 
 const ModifyInput = styled.input`
   all: unset;
+  width: 100%;
+  padding-left: 10px;
+  cursor: text;
 `;
 
 const Validation = styled.div`
-  justify-content: flex-end;
-  align-item: flex-start;
-
-  width: 30px;
+  display: flex;
+  justify-content: cetner;
+  align-items: center;
+  padding-right: 3px;
+  width: ${props => props.width};
   height: 100%;
-  background-color: green;
   border-radius: 5px;
+  cursor: pointer;
 `;
 
-const CheckLogo = styled.img``;
+const CheckLogo = styled.img`
+  height: 30px;
+  width: 30px;
+  transition: all 0.4s;
 
-function UserAccount() {
+  &:hover {
+    filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+    height: 35px;
+    width: 35px;
+  }
+`;
+
+function UserAccount({user, Disconnect}) {
   const [modifyInformation, setModifyIformation] = useState(false);
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
+  const [emptyUsername, setEmptyUsername] = useState(false);
+  const [emptyEmail, setEmptyEmail] = useState(false);
   const [modifyName, setModifyName] = useState(false);
 
-  const userName = "UserName";
-  const eMail = "ferfzef@gmail.com";
   const Coin = 431;
   const creationDateTime = "12/01/2022";
   const followSince = "01/01/2021";
@@ -232,25 +283,41 @@ function UserAccount() {
 
   function HandleChangeName() {
     setModifyName(false);
-    NotificationManager.success("", "Modification enregistré avec succès !");
+  }
+
+  function handleUsernameChange(username) {
+    setUsername(username)
+    !username ?
+    setEmptyUsername(true)
+    : setEmptyUsername(false)
+  }
+
+  function logOut() {
+    Disconnect();
+    history.push('/Connexion')
   }
 
   return (
     <UserContainer>
       <UserCard>
         <NameAndImage>
-          <ProfilePicture />
+          <DivProfilePicture>
+            <ProfilePicture />
+            <ModifyProfilePicture>
+              <EditLogo src={edit} />
+            </ModifyProfilePicture>
+          </DivProfilePicture>
           <Name>
-            {modifyName ? (
-              <InputDiv style={{ height: "30px" }}>
-                <ModifyInput value={userName} />
-                <Validation onClick={() => HandleChangeName()}>
+            {modifyName ? 
+              <InputDiv height="40px" error={emptyUsername}>
+                <ModifyInput value={username} onChange={e => handleUsernameChange(e.target.value)} />
+                <Validation width="40px" onClick={() => HandleChangeName()} >
                   <CheckLogo src={check} />
                 </Validation>
               </InputDiv>
-            ) : (
-              userName
-            )}
+            : 
+              user.username
+            }
             <TwitchName>TwitchName</TwitchName>
           </Name>
           <ModifyButton src={modify} onClick={() => ToggleModifyName()} />
@@ -265,14 +332,14 @@ function UserAccount() {
         </UserInformationTitle>
         <UserInformation>
           <Information>
-            E-Mail :{" "}
-            {modifyInformation ? (
+            E-Mail : {" "}
+            {modifyInformation ? 
               <InputDiv style={{ width: "50%", justifyContent: "center" }}>
-                <ModifyInput value={eMail} />
+                <ModifyInput value={user.email} />
               </InputDiv>
-            ) : (
-              eMail
-            )}
+            : 
+              user.email
+            }
           </Information>
           <Information>Coin : {Coin} </Information>
           <Information>
@@ -282,12 +349,33 @@ function UserAccount() {
         </UserInformation>
         <CardFooter>
           <ChangePassword>Changer de mot de passe</ChangePassword>
-          <Disconnect>Deconnexion</Disconnect>
+          <DisconnectButton onClick={() => logOut()}>Deconnexion</DisconnectButton>
         </CardFooter>
       </UserCard>
-      <NotificationContainer />
     </UserContainer>
   );
 }
 
-export default UserAccount;
+const mapStateToProps = createStructuredSelector({
+  loading: makeSelectLoading(),
+  error: makeSelectError(),
+  user: makeSelectUser()
+});
+
+export function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      Disconnect
+    }, dispatch
+  );
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+
+export default compose(
+  withConnect,
+  memo
+)(UserAccount);

@@ -33,10 +33,16 @@ const makeSelectLocation = () =>
     routerState => routerState.location,
   );
 
-  const makeSelectSucces = () =>
+  const makeSelectSuccess = () =>
   createSelector(
     selectGlobal,
-    globalState => globalState.succes,
+    globalState => globalState.success,
+  );
+
+  const makeSelectIsConnected = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.isConnected,
   );
 
 export {
@@ -45,5 +51,6 @@ export {
   makeSelectLoading,
   makeSelectError,
   makeSelectLocation,
-  makeSelectSucces,
+  makeSelectSuccess,
+  makeSelectIsConnected,
 };

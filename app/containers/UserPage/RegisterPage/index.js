@@ -1,5 +1,6 @@
 // React
 import React, { useState, memo, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 
 // Redux
 import { connect } from "react-redux";
@@ -11,7 +12,7 @@ import { useInjectReducer } from "utils/injectReducer";
 import { toast } from 'react-toastify';
 import reducer from "../../App/reducer";
 import { Register, NotificationSend } from '../../App/actions'
-import { makeSelectLoading, makeSelectError, makeSelectSucces } from "../../App/selectors";
+import { makeSelectLoading, makeSelectError, makeSelectSuccess } from "../../App/selectors";
 
 // Components
 import {
@@ -30,10 +31,11 @@ import closeEye from "../../../media/closeEye.svg";
 import eye from "../../../media/eye.svg";
 
 //Tools
+import history from "../../../utils/history";
 
 const key = "register";
 
-function RegisterPage({ Register, loading, error, succes, NotificationSend }) {
+function RegisterPage({ Register, loading, error, success, NotificationSend }) {
   useInjectReducer({ key, reducer });
 
   const [passwordShown, setPasswordShown] = useState(true);
@@ -43,6 +45,8 @@ function RegisterPage({ Register, loading, error, succes, NotificationSend }) {
   const [invalidPassword, setInvalidPassword] = useState(false);
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [user, setUser] = useState({});
+
+  const notify = () => toast.success("Ton compte a été créé");
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
@@ -94,9 +98,9 @@ function RegisterPage({ Register, loading, error, succes, NotificationSend }) {
   };
 
   useEffect(() => {
-    if (succes) {
-      const notify = () => toast("Wow so easy!");
+    if (success) {
       NotificationSend();
+      history.push("/");
     }
   });
 
@@ -174,7 +178,7 @@ function RegisterPage({ Register, loading, error, succes, NotificationSend }) {
 const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
   error: makeSelectError(),
-  succes: makeSelectSucces()
+  success: makeSelectSuccess()
 });
 
 export function mapDispatchToProps(dispatch) {

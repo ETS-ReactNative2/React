@@ -10,7 +10,7 @@ import { DivInput, Input, Button } from "../../../components/Input/input";
 import { ChildContainer, Title } from "../../../Components/Theme/appTheme";
 
 function ForgettenPassword() {
-  const notify = () => toast("Wow so easy!");
+  const notify = () => toast.success("Wow so easy!");
   function SendEmail() {
     setTimeout(Return(), 3000);
   }
