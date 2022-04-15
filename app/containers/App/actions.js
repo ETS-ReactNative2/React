@@ -96,7 +96,6 @@ export function NotificationSend() {
 export function Login(user) {
   return dispatch => {
     dispatch({ type: "LOGIN_START" });
-    console.log('action');
 
     const data = {
       username: user.username,
@@ -113,7 +112,6 @@ export function Login(user) {
     fetch(`http://localhost:8000/user/login`, requestOptions)
       .then(response => response.json())
       .then(res => {
-        console.log('res', res);
         if (res.error) {
           dispatch({ type: "LOGIN_ERROR", payload: res });
         } else {
@@ -128,4 +126,28 @@ export function Disconnect() {
   return dispatch =>  {
     dispatch({ type: "DISCONNECT"})
   }
+}
+
+export function ChangeUserName(username) {
+  return dispatch => {
+    dispatch({ type: "CHANGEUSERNAME_START" });
+
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    fetch(`http://localhost:8000/user/changeusername/${username}`, requestOptions)
+      .then(response => response.json())
+      .then(res => {
+        console.log('res', res);
+        if (res.error) {
+          dispatch({ type: "CHANGEUSERNAME_ERROR", payload: res });
+        } else {
+          dispatch({ type: "CHANGEUSERNAME_END", payload: res });
+        }
+      });
+  };
 }

@@ -12,7 +12,7 @@ import {
   makeSelectError,
   makeSelectUser
 } from "../../App/selectors";
-import { Disconnect } from "../../App/actions";
+import { Disconnect, ChangeUserName } from "../../App/actions";
 
 //Tools
 import styled from "styled-components";
@@ -22,7 +22,9 @@ import history from "../../../utils/history";
 import check from "../../../media/check.svg";
 import modify from "../../../media/modify.svg";
 import edit from "../../../media/edit.svg"
-import { disconnect } from "ngrok";
+
+//Components
+import Avatar from "./avatar"
 
 const UserContainer = styled.div`
   position: absolute;
@@ -37,12 +39,15 @@ const UserContainer = styled.div`
 const UserCard = styled.div`
   width: 40%;
   height: 75%;
-
   margin-top: 80px;
   border-radius: 10px;
   padding: 40px;
-
   background-color: #020e19;
+  transition: all 0.5s;
+  box-shadow: 0px 5px 30px 2px black;
+
+  &:hover {
+  }
 `;
 
 const NameAndImage = styled.div`
@@ -58,7 +63,7 @@ const NameAndImage = styled.div`
 
 const DivProfilePicture = styled.div`
   display: flex;
-  background-color: white;
+  background-color: gray;
   width: 70px;
   height: 70px;
   border-radius: 50%;
@@ -78,7 +83,7 @@ const ModifyProfilePicture = styled(DivProfilePicture)`
   transition: all 0.2s;
 
   &:hover {
-    opacity: 0.5;
+    opacity: 0.6;
   }
 `
 
@@ -222,7 +227,7 @@ const InputDiv = styled.div`
   }
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    
   }
 
   &::placeholder {
@@ -256,8 +261,6 @@ const CheckLogo = styled.img`
 
   &:hover {
     filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
-    height: 35px;
-    width: 35px;
   }
 `;
 
@@ -268,6 +271,7 @@ function UserAccount({user, Disconnect}) {
   const [emptyUsername, setEmptyUsername] = useState(false);
   const [emptyEmail, setEmptyEmail] = useState(false);
   const [modifyName, setModifyName] = useState(false);
+  const [isOpenSelection, setIsOpenSelection] = useState(false);
 
   const Coin = 431;
   const creationDateTime = "12/01/2022";
@@ -282,6 +286,7 @@ function UserAccount({user, Disconnect}) {
   }
 
   function HandleChangeName() {
+    ChangeUserName()
     setModifyName(false);
   }
 
@@ -297,13 +302,20 @@ function UserAccount({user, Disconnect}) {
     history.push('/Connexion')
   }
 
+  function openSelection() {
+    setIsOpenSelection(true)
+  }
+
   return (
     <UserContainer>
+      {isOpenSelection ?
+        <Avatar />
+      : null}
       <UserCard>
         <NameAndImage>
           <DivProfilePicture>
             <ProfilePicture />
-            <ModifyProfilePicture>
+            <ModifyProfilePicture onClick={() => openSelection()}>
               <EditLogo src={edit} />
             </ModifyProfilePicture>
           </DivProfilePicture>
@@ -365,6 +377,7 @@ const mapStateToProps = createStructuredSelector({
 export function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
+      ChangeUserName,
       Disconnect
     }, dispatch
   );
