@@ -306,11 +306,15 @@ function UserAccount({user, Disconnect}) {
     setIsOpenSelection(true)
   }
 
+  function closeSelection() { 
+    isOpenSelection ?
+    setIsOpenSelection(false)
+    : null
+  }
+
   return (
-    <UserContainer>
-      {isOpenSelection ?
-        <Avatar />
-      : null}
+    <UserContainer onClick={() => closeSelection()}>
+        <Avatar onClick={e => e.stopPropagation()} isOpen={isOpenSelection}/>
       <UserCard>
         <NameAndImage>
           <DivProfilePicture>

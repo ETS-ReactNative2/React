@@ -10,11 +10,14 @@ import defaultAvatar from "../../../media/avatar/defaultAvatar.png"
 const Popup = styled.div`
   width: 60%;
   height: 40%;
-  background-color: #020e19;
+  background-color: black;
   position: absolute;
   border-radius: 10px;
   z-index: 2;
   box-shadow: 0px 0px 50px black;
+  transform: scale(${props => props.isOpen ? "1" : "0.5"});
+  transition: all 0.3s;
+  opacity: ${props => props.isOpen ? "1" : "0"};
 `
 
 const DivProfilePicture = styled.div`
@@ -30,8 +33,7 @@ const DivProfilePicture = styled.div`
   transition: all 0.4s;
   
   &:hover {
-    width: 120px;
-    height: 120px;
+    transform: scale(1.4);
   }
 `
 
@@ -49,10 +51,11 @@ const AvatarImg = styled.img`
   height: 70%;
 `
 
-function Avatar() {
+function Avatar(isOpen) {
 
+  console.log('open', isOpen.isOpen)
   return(
-    <Popup>
+    <Popup isOpen={isOpen.isOpen}>
       <Title>Choisi ton Avatar</Title>
       <DivProfilePicture>
         <AvatarImg src={defaultAvatar}></AvatarImg>
